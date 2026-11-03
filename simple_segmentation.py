@@ -159,6 +159,44 @@ rfm['PCA1'] = pca_coords[:, 0]
 rfm['PCA2'] = pca_coords[:, 1]
 print(f"PCA Explained Variance Ratio: {pca.explained_variance_ratio_.round(3)}")
 
+# Save a dedicated cluster diagram with K-Means centroids.
+plt.figure(figsize=(8, 6))
+ax = sns.scatterplot(
+    data=rfm,
+    x='PCA1',
+    y='PCA2',
+    hue='KMeans_Cluster',
+    palette='tab10',
+    s=65,
+    alpha=0.75
+)
+centroid_coords = pca.transform(kmeans.cluster_centers_)
+plt.scatter(
+    centroid_coords[:, 0],
+    centroid_coords[:, 1],
+    marker='X',
+    s=220,
+    c='black',
+    edgecolors='white',
+    linewidths=1.2,
+    label='K-Means centroid'
+)
+for cluster_id, (x_coord, y_coord) in enumerate(centroid_coords):
+    ax.annotate(
+        f'Cluster {cluster_id}',
+        (x_coord, y_coord),
+        xytext=(7, 7),
+        textcoords='offset points',
+        fontweight='bold'
+    )
+ax.set_title('Customer Cluster Diagram (PCA Projection)')
+ax.set_xlabel('Principal Component 1')
+ax.set_ylabel('Principal Component 2')
+plt.tight_layout()
+plt.savefig('cluster_diagram.png', dpi=150)
+plt.close()
+print("Saved K-Means cluster diagram to 'cluster_diagram.png'.")
+
 # ------------------------------------------------------------------------------
 # STEP 7: MANIFOLD VISUALIZATION (t-SNE - NON-LINEAR)
 # ------------------------------------------------------------------------------

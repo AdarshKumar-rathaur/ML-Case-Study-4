@@ -22,6 +22,7 @@ def build_simple_segmentation_html():
         code_text = f.read()
 
     elbow_b64 = get_base64_image("elbow_plot.png")
+    cluster_diagram_b64 = get_base64_image("cluster_diagram.png")
     pca_tsne_b64 = get_base64_image("pca_tsne_clusters.png")
 
     formatter = HtmlFormatter(
@@ -645,8 +646,12 @@ All steps completed successfully!</pre>
           <div class="plot-title">Figure 1: K-Means Elbow Curve (Selecting K=4)</div>
         </div>
         <div class="plot-card">
+          <img src="data:image/png;base64,{cluster_diagram_b64}" alt="K-Means Cluster Diagram">
+          <div class="plot-title">Figure 2: Customer Cluster Diagram with K-Means Centroids</div>
+        </div>
+        <div class="plot-card">
           <img src="data:image/png;base64,{pca_tsne_b64}" alt="PCA and t-SNE Projections">
-          <div class="plot-title">Figure 2: 2D Dimensionality Reduction (PCA vs. t-SNE)</div>
+          <div class="plot-title">Figure 3: 2D Dimensionality Reduction (PCA vs. t-SNE)</div>
         </div>
       </div>
 
